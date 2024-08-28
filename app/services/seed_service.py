@@ -7,6 +7,8 @@ from app.utils import success_response, server_error_response, not_found_respons
 tableName = 'todo'
 
 
+
+
 def seeder_todos():
   try:
     conn = get_db_connection()
