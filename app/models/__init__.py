@@ -1,3 +1,3 @@
-from .seed import seed_todos
+from .todo import Todo
 
-__all__ = ['seed_todos']
+__all__ = ["Todo"]

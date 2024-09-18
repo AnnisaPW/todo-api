@@ -1,12 +1,14 @@
 from flask import Blueprint
-from app.services import seeder_todos, delete_seeded_todos
+from app.services import SeedServ
 
-seeder_bp = Blueprint('seeder', __name__)
+seeder_bp = Blueprint("seeder", __name__)
 
-@seeder_bp.route('/seeder/todos', methods=['POST'])
+
+@seeder_bp.route("/seeder/todos", methods=["POST"])
 def seeder_todos_route():
-  return seeder_todos()
+    return SeedServ.seeder_todos()
 
-@seeder_bp.route('/seeder/todos', methods=['DELETE'])
+
+@seeder_bp.route("/seeder/todos", methods=["DELETE"])
 def delete_todos_route():
-  return delete_seeded_todos()
+    return SeedServ.delete_seeded_todos()
