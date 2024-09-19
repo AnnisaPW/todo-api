@@ -4,6 +4,7 @@ services:
   mysql:
     image: mysql:latest
     container_name: mysql_container
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -22,6 +23,7 @@ services:
       - .:/app
     depends_on:
       - mysql
+    restart: always
     environment:
       FLASK_APP: ${FLASK_APP}
       FLASK_RUN_HOST: ${FLASK_RUN_HOST}
