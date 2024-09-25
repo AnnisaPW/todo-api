@@ -1,8 +1,13 @@
 # app/routes/todo_routes.py
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, redirect, request
 from app.services import TodoServ
 
 todo_bp = Blueprint("todo", __name__)
+
+
+@todo_bp.route("/", methods=["GET"])
+def init_route():
+    return redirect("/todos")
 
 
 @todo_bp.route("/todos", methods=["GET"])
