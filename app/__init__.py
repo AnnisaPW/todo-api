@@ -2,7 +2,7 @@
 from flask import Flask
 from app.config import config
 from app.extensions import mysql
-from app.routes import todo_bp, seeder_bp
+from app.routes import todo_bp, seeder_bp, auth_bp
 from flask_cors import CORS
 
 
@@ -17,5 +17,6 @@ def create_app(config_name):
     # Register blueprints
     app.register_blueprint(todo_bp)
     app.register_blueprint(seeder_bp)
+    app.register_blueprint(auth_bp)
 
     return app

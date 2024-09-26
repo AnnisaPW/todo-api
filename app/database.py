@@ -18,6 +18,14 @@ class DB:
         with app.app_context():
             cursor = mysql.connection.cursor()
             cursor.execute(
+                """CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_salt VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL
+);"""
+            )
+            cursor.execute(
                 """
               CREATE TABLE IF NOT EXISTS todo (
                   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -55,3 +63,35 @@ class DB:
             )
             mysql.connection.commit()
             cursor.close()
+
+    @staticmethod
+    def write_db(query, params):
+        cursor = mysql.connection.cursor()
+
+        try:
+            cursor.execute(query, params)
+            mysql.connection.commit()
+            cursor.close()
+            return True
+
+        except Exception as e:
+            cursor.close()
+            return False
+
+    @staticmethod
+    def read_db(query, params=None):
+        cursor = mysql.connection.cursor()
+        if params:
+            cursor.execute(query, params)
+        else:
+            cursor.execute(query)
+
+        entries = cursor.fetchall()
+        cursor.close()
+
+        content = []
+
+        for entry in entries:
+            content.append(entry)
+
+        return content
