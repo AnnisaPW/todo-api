@@ -1,7 +1,9 @@
-import email
-from flask import Response, jsonify, request
+from datetime import timedelta
+from flask import Response, jsonify
+from flask_jwt_extended import create_access_token
 from app.utils import Validator, Generator
 from app.database import DB
+from app.config import Config
 
 
 class AuthServ:
@@ -52,13 +54,14 @@ class AuthServ:
         user_password = request["password"]
 
         # Validate user and retrieve token or error message
-        validation_result = Validator.validate_user(user_email, user_password)
+        user_token = Validator.validate_user(user_email, user_password)
 
-        if isinstance(
-            validation_result, str
-        ):  # If validation returned an error message
-            return jsonify({"error": validation_result}), 401
-        elif validation_result:  # Valid token returned
-            return jsonify({"jwt_token": validation_result})
+        if not user_token:
+            return jsonify({"error": "Incorrect email or password"}), 401
         else:
-            return jsonify({"error": "Login failed due to an unknown error"}), 401
+            # Create a JWT token with an expiration time
+            access_token = create_access_token(
+                identity=user_email,
+                expires_delta=timedelta(seconds=int(Config.JWT_ACCESS_TOKEN_EXPIRES)),
+            )
+            return jsonify({"jwt_token": access_token})

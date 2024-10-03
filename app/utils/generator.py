@@ -25,5 +25,5 @@ class Generator:
     @staticmethod
     def generate_jwt_token(content):
         encoded_content = jwt.encode(content, Config.JWT_SECRET_KEY, algorithm="HS256")
-        token = str(encoded_content).split("'")[1]
+        token = str(encoded_content).split("'")[0]
         return token

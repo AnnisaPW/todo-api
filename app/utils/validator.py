@@ -19,8 +19,8 @@ class Validator:
         if len(current_user) != 1:
             return "User does not exist"
 
-        saved_password_hash = current_user[0][2]
-        saved_password_salt = current_user[0][3]
+        saved_password_hash = current_user[0][3]
+        saved_password_salt = current_user[0][2]
 
         # Print saved salt and password hash for comparison
         print(f"Login User - Saved Salt: {saved_password_salt}")
